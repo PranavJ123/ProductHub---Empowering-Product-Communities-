@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-...Your-Integrity-Code-Here..." crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>Product Details</title>
+
+</head>
+<body>
+    <div class="super_container">
+        <div class="single_product">
+            <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+                <div class="row">
+                    <div id="carouselExampleControls" class="col-lg-4 carousel slide" height="100vh" data-ride="carousel">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img class="d-block w-100" height="500vh" src="{{productRequest?.image?.at(0)?.url}}" alt="First slide">
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-lg-8 order-3">
+                        <div class="product_description">
+                            <div class="product_name">{{productRequest?.product?.name}}</div>
+                            <div class="product_brand">Brand: <span>{{productRequest?.product?.brand}}</span></div>
+                            <div class="product_code">Code: <span>{{productRequest?.product?.code}}</span></div>
+                            <div class="product_rating" *ngIf="avgRating!=''; ">Average Rating: <span>{{avgRating}}</span></div>
+                            <div> <span class="product_price">${{productRequest?.product?.price}}</span>
+                            <div>
+                            </div>               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <header class="text-center pb-5">
+                        <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-md-12 text-center"> 
+                            <h1 class="h2">User Reviews
+                            <span><button class="btn btn-primary" (click)="requestReview()"> Request for Review</button></span></h1>
+                        </div>
+                    </div>
+                    </header>
+                </div>
+            </div>
+    
+    
+            <div class="row" *ngFor="let item of review">
+                <div class="col-lg-6">
+    
+                    <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+                        <div class="blockquote-custom-icon bg-info shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+                        <h3>{{item.heading}}</h3>
+                        <p class="mb-0 mt-2 font-italic">{{item.message}}</p>
+                       <h6>Ratings: {{item.ratings}}</h6>
+                    </blockquote>
+    
+                </div>
+            </div>
+            </div>
+            
+               
+            
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>Left Sidebar</title>
+</head>
+
+<body>
+  <div class="sidebar">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" (click)="viewRequests()">Review Requests</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="viewReviews()">Review Status</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="content" id="request-status-content">
+    <div class="container my-3">
+      <h1 class="mb-3">Review Request Status</h1>
+      <div class="row" *ngFor="let item of reviewRequestsWithProduct | keyvalue">
+        <div class="col-md-6" *ngIf="item.value != null">
+          <div class="card">
+            <img src={{item.value.image[0].url}} alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{item.value.product.name }}</h5>
+              <p class="card-text">{{item.value.product.brand}}</p>
+              <ng-container *ngIf="item.key.status == 0;else second">
+                <div class="card-status">Status: Pending</div></ng-container>
+              <ng-template #second>
+                
+                <ng-container *ngIf="item.key.status == 1;else third"><a [routerLink]="['/addReview']" [queryParams]="{id:item.key.id,pid:item.value.product.id}"><button class="btn btn-primary" >Add Review</button></a></ng-container>
+              </ng-template>
+            
+              <ng-template #third>
+                <ng-container *ngIf="item.key.status == -1 ;else fourth">
+                <div class="card-status">Status: Rejected</div></ng-container></ng-template>
+                <ng-template #fourth>
+                  <div class="card-status">Status: Reviewed</div>
+                </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content d-none" id="review-status-content">
+    <div class="container my-3">
+      
+      <h1 class="mb-3">Review Status</h1>
+      <div class="row" *ngFor="let review of reviewsWithProduct | keyvalue">
+        <div class="col-md-6" *ngIf="review.value != null">
+          <div class="card">
+            <img src={{review.value.image[0].url}} alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{review.value.product.name }}</h5>
+              <p class="card-text">{{review.value.product.brand}}</p>
+              <h6 class="card-text">{{review.key.heading}}</h6>
+              <p class="card-text">{{review.key.message}}</p>
+              <ng-container *ngIf="review.key.status == 0;else second">
+                <div class="card-status">Status: Pending</div></ng-container>
+              <ng-template #second>
+                <ng-container *ngIf="review.key.status == 1;else third"><div class="card-status">Status:Accepted</div></ng-container>
+              </ng-template>
+              <ng-template #third>
+                <div class="card-status">Status: Rejected</div></ng-template>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
